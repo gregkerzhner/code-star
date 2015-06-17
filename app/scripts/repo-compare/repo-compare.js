@@ -8,14 +8,21 @@ angular.module('code-star.repo-compare', [
        views: {      
         'content': {
           templateUrl: 'repo-compare/repo-compare.tpl.html',
-          controller: "RepoCompareController"
+          controller: "RepoCompareController",
+          controllerAs: 'repoCompareController'
         }        
       }
-    })
-  ;
-
+    });
 })
-
-.controller("RepoCompareController", function($scope,$timeout){
-  
+.controller("RepoCompareController", function($scope, $timeout){
+  this.usersForCompare = [
+    {
+      username: "",
+      repos: []
+    },
+    {
+      username: "",
+      repos: []
+    }
+  ];
 })

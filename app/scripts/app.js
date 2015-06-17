@@ -5,7 +5,8 @@ angular.module('code-star', [
   'restangular',
   'code-star.templates',
   'code-star.config',
-  'code-star.repo-compare'
+  'code-star.repo-compare',
+  'code-star.directives.repo'
 ])
 .config(function ($locationProvider, $httpProvider, $stateProvider) {
   $stateProvider

@@ -5,7 +5,8 @@ angular.module('code-star', [
   'restangular',
   'code-star.templates',
   'code-star.config',
-  'code-star.repo-compare'
+  'code-star.repo-compare',
+  'code-star.directives.repo'
 ])
 .config(function ($locationProvider, $httpProvider, $stateProvider) {
   $stateProvider
@@ -30,6 +31,26 @@ angular.module("code-star.config", [])
 .constant("ENV", {})
 
 ;
+angular.module('code-star.directives.repo', [
+
+])
+.directive("repo", function() {
+  return {
+    controller: 'RepoController',
+    templateUrl: 'directives/repo.tpl.html',
+    controllerAs: 'repo',
+    scope: {
+      user: "="
+    }
+  }
+})
+.controller('RepoController', function($timeout, $scope) {
+  this.onUsernameChange = function(newVal, oldVal){
+    console.log(newVal);
+  }
+
+  $scope.$watch('this.user.username', this.onUsernameChange);
+})    
 angular.module('code-star.repo-compare', [
 
 ])
@@ -40,14 +61,21 @@ angular.module('code-star.repo-compare', [
        views: {      
         'content': {
           templateUrl: 'repo-compare/repo-compare.tpl.html',
-          controller: "RepoCompareController"
+          controller: "RepoCompareController",
+          controllerAs: 'repoCompareController'
         }        
       }
-    })
-  ;
-
+    });
 })
-
-.controller("RepoCompareController", function($scope,$timeout){
-  
+.controller("RepoCompareController", function($scope, $timeout){
+  this.usersForCompare = [
+    {
+      username: "",
+      repos: []
+    },
+    {
+      username: "",
+      repos: []
+    }
+  ];
 })
