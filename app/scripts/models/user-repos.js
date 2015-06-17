@@ -2,7 +2,7 @@ angular.module('code-star.models.user-repos', [
 
 ])
 
-.factory('UserRepos', function(Restangular, $q, $timeout){
+.factory('UserRepos', function(Restangular, $q, $timeout, APP_CONSTANTS){
   var UserRepos = function(){
     this.username = "";
     this.reset();
@@ -11,7 +11,7 @@ angular.module('code-star.models.user-repos', [
   UserRepos.prototype.reset = function(){
     this.repos = [];
     this.stats = {sum: 0, mean: 0};
-    this.status = "undetermined";
+    this.status = APP_CONSTANTS.REPO_STATE.UNDETERMINED;
   }
 
   UserRepos.prototype.fetchGithubData = function(){

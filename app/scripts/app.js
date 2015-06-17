@@ -11,6 +11,13 @@ angular.module('code-star', [
   'angular-spinner',
   'code-star.models.users-repos-comparator'
 ])
+.constant("APP_CONSTANTS", {
+  REPO_STATE: {
+    WIN: "win",
+    DRAW: "draw",
+    UNDETERMINED: "undetermined"
+  }
+})
 .config(function ($locationProvider, $httpProvider, $stateProvider) {
   $stateProvider
     .state('code-star', {

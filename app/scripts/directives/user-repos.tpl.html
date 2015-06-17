@@ -40,9 +40,14 @@
         </div>
       </div>
     </div>
-    <div class="row padding-top-10" ng-show="userRepos.user.status != 'undetermined'">
+    <div class="row padding-top-10" ng-show="userRepos.user.status == userRepos.APP_CONSTANTS.REPO_STATE.DRAW">
       <div class="col-md-12">
-        <div class="alert" role="alert" ng-class="{'alert-success': userRepos.user.status == 'winner', 'alert-info': userRepos.user.status == 'draw'}">{{userRepos.user.status == 'winner' ? 'Winner' : 'Its a draw!'}}</div>
+        <div class="alert alert-info" role="alert">Its a draw!</div>
+      </div>
+    </div>
+    <div class="row padding-top-10" ng-show="userRepos.user.status == userRepos.APP_CONSTANTS.REPO_STATE.WIN">
+      <div class="col-md-12">
+        <div class="alert alert-success" role="alert">This repo wins!</div>
       </div>
     </div>
     <div class="row">
