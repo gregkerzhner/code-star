@@ -5,8 +5,9 @@ angular.module('code-star', [
   'restangular',
   'code-star.templates',
   'code-star.config',
-  'code-star.repo-compare',
-  'code-star.directives.repo'
+  'code-star.github-account-compare',
+  'code-star.directives.user-repos',
+  'code-star.models.user-repos'
 ])
 .config(function ($locationProvider, $httpProvider, $stateProvider) {
   $stateProvider
@@ -31,51 +32,58 @@ angular.module("code-star.config", [])
 .constant("ENV", {})
 
 ;
-angular.module('code-star.directives.repo', [
+angular.module('code-star.directives.user-repos', [
 
 ])
-.directive("repo", function() {
+.directive("userRepos", function() {
   return {
-    controller: 'RepoController',
-    templateUrl: 'directives/repo.tpl.html',
-    controllerAs: 'repo',
+    controller: 'UserReposController',
+    templateUrl: 'directives/user-repos.tpl.html',
+    controllerAs: 'userRepos',
     scope: {
       user: "="
-    }
+    },
+    bindToController: true
   }
 })
-.controller('RepoController', function($timeout, $scope) {
+.controller('UserReposController', function($timeout, $scope) {
   this.onUsernameChange = function(newVal, oldVal){
     console.log(newVal);
   }
 
-  $scope.$watch('this.user.username', this.onUsernameChange);
 })    
-angular.module('code-star.repo-compare', [
+angular.module('code-star.github-account-compare', [
 
 ])
 .config(function ($locationProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
   $stateProvider
-    .state('code-star.repo-compare', {
+    .state('code-star.github-account-compare', {
       url: "",
        views: {      
         'content': {
-          templateUrl: 'repo-compare/repo-compare.tpl.html',
-          controller: "RepoCompareController",
-          controllerAs: 'repoCompareController'
+          templateUrl: 'github-account-compare/github-account-compare.tpl.html',
+          controller: "GithubAccountCompareController",
+          controllerAs: 'githubAccountCompare'
         }        
       }
     });
 })
-.controller("RepoCompareController", function($scope, $timeout){
+.controller("GithubAccountCompareController", function(UserRepos){
   this.usersForCompare = [
-    {
-      username: "",
-      repos: []
-    },
-    {
-      username: "",
-      repos: []
-    }
+    new UserRepos(), 
+    new UserRepos()
   ];
 })
+angular.module('code-star.models.user-repos', [
+
+])
+
+.factory('UserRepos', function(){
+  var UserRepos = function(){
+    this.username = "";
+    this.repos = [];
+  }
+
+
+  return UserRepos;
+});

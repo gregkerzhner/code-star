@@ -5,8 +5,9 @@ angular.module('code-star', [
   'restangular',
   'code-star.templates',
   'code-star.config',
-  'code-star.repo-compare',
-  'code-star.directives.repo'
+  'code-star.github-account-compare',
+  'code-star.directives.user-repos',
+  'code-star.models.user-repos'
 ])
 .config(function ($locationProvider, $httpProvider, $stateProvider) {
   $stateProvider
