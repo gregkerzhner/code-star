@@ -23,35 +23,27 @@ var gulp = require('gulp'),
 
 
 var vendorJs =  [
-  
   'app/vendor/jquery/jquery.js',
-  
   'app/vendor/angular/angular.js',
   'app/vendor/angular-animate/angular-animate.js',
   'app/vendor/angular-cookies/angular-cookies.js',
   'app/vendor/angular-sanitize/angular-sanitize.js',
-  
   'app/vendor/underscore/underscore.js',
-  
-  
-  'app/vendor/angular-ui-router/release/angular-ui-router.js'
-  
+  'app/vendor/angular-ui-router/release/angular-ui-router.js',
+  'app/vendor/restangular/dist/restangular.js'
   ];
 
-var vendorStyles = [
-    
-    'app/vendor/bootstrap/dist/css/bootstrap.css'
-    
-  ];
+var vendorStyles = [ 
+  'app/vendor/bootstrap/dist/css/bootstrap.css'  
+];
 
 var otherAssets = [
-    './app/fonts/**/*.*',
-    './app/images/**/*.*'   
-  ]
+  './app/fonts/**/*.*',
+  './app/images/**/*.*'   
+]
 
 
 var rand = parseInt(Math.random()*10000000000000000).toString();
-
 var config = function(src) {
   return gulp.src(src)
     .pipe(ngConstant())
@@ -59,7 +51,6 @@ var config = function(src) {
       path.basename = 'config'
     }))
     .pipe(gulp.dest('app/scripts'));
-
 }
 
 gulp.task('config-development', function () {
@@ -281,7 +272,7 @@ gulp.task('watch', function(){
 
 gulp.task('concat', function(){
   return runSequence('appScripts', 'vendorScripts', 'vendorStyles', 'appStyles','templates', function() {
-    
+    console.log('Concat done.');  
   });
 })
 

@@ -10,24 +10,20 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <% if (env ==="development") { %>
+    
     <link rel="stylesheet" href="/styles/vendor-styles.css">
     <link rel="stylesheet" href="/styles/app-styles.css">
-    <% } else {%>
-    <link rel="stylesheet" href="/styles/<%= rand %>styles.css">
-    <% } %>
+    
   </head>
 <body ng-app='code-star'>
     <div class="container-fluid" id="main">
         <div ui-view="content"></div>
     </div>
 <!-- ===== yeoman hook ===== -->
-    <% if (env ==="development") { %>
+    
     <script src="/vendor-scripts.js"></script>
     <script src="/templates.js"></script>
     <script src="/app-scripts.js"></script>
-    <% } else { %>
-    <script src="<%= rand %>scripts.js"></script>
-    <% } %>
+    
   </body>
 </html>
