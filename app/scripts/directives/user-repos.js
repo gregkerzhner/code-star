@@ -13,7 +13,7 @@ angular.module('code-star.directives.user-repos', [
     bindToController: true
   }
 })
-.controller('UserReposController', function($timeout, $scope, spinner, APP_CONSTANTS) {
+.controller('UserReposController', function($scope, spinner, APP_CONSTANTS) {
   this.spinnerName = "userRepoSpinner"+$scope.$id;
   this.APP_CONSTANTS = APP_CONSTANTS;
   this.onUsernameChange = function(){

@@ -31,7 +31,7 @@ angular.module('code-star', [
     });
 
 }) 
-.run(function($timeout, $rootScope, $location, Restangular){
+.run(function(Restangular){
   Restangular.setBaseUrl('https://api.github.com');
 })
 
