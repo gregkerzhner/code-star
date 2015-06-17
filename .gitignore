@@ -1,5 +1,6 @@
-/dist
+/development
 /staging
+/production
 /node_modules
 /app/vendor
 phantomjsdriver.log
