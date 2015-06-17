@@ -6,6 +6,7 @@ angular.module('code-star.models.user-repos', [
   var UserRepos = function(){
     this.username = "";
     this.repos = [];
+    this.stats = {};
   }
 
 
@@ -17,10 +18,12 @@ angular.module('code-star.models.user-repos', [
       var url = 'users/'+this.username + '/repos';
       Restangular.all(url).getList()
       .then(function(repos) {
-        console.log(repos);
         _this.repos = repos;
+        _this.calculateStats();
         deferred.resolve(_this.repos);
       }, function(err){
+        _this.repos = [];
+        _this.calculateStats();
         deferred.reject(err);
       })
     }
@@ -33,12 +36,14 @@ angular.module('code-star.models.user-repos', [
     return deferred.promise;
   }
 
-  UserRepos.prototype.stats = function(){
-    var stats = {};
+  UserRepos.prototype.calculateStats = function(){
+    this.stats = {sum: 0, mean: 0};
     if(this.repos && this.repos.length > 0){
-      stats.mean = _.reduce(this.repos, function(sum, repo) {
-        sum + repo.stargazers_count
-      }, 0) / this.repos.length
+      var _this = this;
+      _.each(this.repos, function(repo){
+        _this.stats.sum += repo.stargazers_count;
+      })
+      this.stats.mean = _this.stats.sum/this.repos.length;
     }
   }
 

@@ -7,6 +7,21 @@ module.run(["$templateCache", function($templateCache) {
     "<div class=\"row\">\n" +
     "  <div class=\"col-md-12\">\n" +
     "    <input class=\"form-control input-lg\" placeholder=\"Github username\" ng-model=\"userRepos.user.username\" ng-change=\"userRepos.onUsernameChange()\" ng-model-options='{ debounce: 500 }'>\n" +
+    "    <div class=\"row padding-top-10\">\n" +
+    "      <div class=\"col-md-12\">\n" +
+    "        <div class=\"row\">\n" +
+    "          <div class=\"col-md-12\">\n" +
+    "            <span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span> Average stars: {{userRepos.user.stats.mean | number: 1}}\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"row\">\n" +
+    "          <div class=\"col-md-12\">\n" +
+    "            <span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span> Total stars: {{userRepos.user.stats.sum}}\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
     "    <div class=\"table-responsive\">\n" +
     "      <table class=\"table table-striped\">\n" +
     "        <thead>\n" +
@@ -30,15 +45,10 @@ module.run(["$templateCache", function($templateCache) {
     "          </tbody>\n" +
     "        </table>\n" +
     "      </div>\n" +
-    "      <div class=\"row\">\n" +
-    "        <div class=\"col-md-12\">\n" +
-    "          \n" +
-    "        </div>\n" +
-    "      </div>\n" +
     "    </div>\n" +
     "    <div class=\"row\">\n" +
     "      <div class=\"col-md-12\">\n" +
-    "        <h4>{{userRepos.message}}</h4>\n" +
+    "        <h5 class=\"text-center\">{{userRepos.message}}</h5>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "  </div>\n" +
@@ -54,7 +64,7 @@ module.run(["$templateCache", function($templateCache) {
   $templateCache.put("github-account-compare/github-account-compare.tpl.html",
     "<div class=\"row\">\n" +
     "  <div class=\"col-md-10 col-md-offset-1\">\n" +
-    "    <h3>Hello</h3>\n" +
+    "    <h3 class=\"text-center\">Code Star</h3>\n" +
     "    <div class=\"row\">\n" +
     "      <div ng-repeat=\"userRepos in githubAccountCompare.usersForCompare\" class=\"col-md-6\">\n" +
     "        <user-repos user=\"userRepos\"></user-repos>\n" +
