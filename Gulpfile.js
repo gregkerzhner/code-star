@@ -30,7 +30,9 @@ var vendorJs =  [
   'app/vendor/angular-sanitize/angular-sanitize.js',
   'app/vendor/underscore/underscore.js',
   'app/vendor/angular-ui-router/release/angular-ui-router.js',
-  'app/vendor/restangular/dist/restangular.js'
+  'app/vendor/restangular/dist/restangular.js',
+  'app/vendor/angular-spin-js/build/angular-spinner.js',
+  'app/vendor/spin.js/spin.js'
   ];
 
 var vendorStyles = [ 

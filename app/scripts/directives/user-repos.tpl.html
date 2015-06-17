@@ -5,23 +5,28 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Repo</th>
-            <th>Stars</th>
+            <th class="col-md-2"></th>
+            <th class="col-md-8">Repo</th>
+            <th class="col-md-2">Stars</th>
           </tr>
         </thead>
       </table>
     </div>
-    <div class="bodycontainer scrollable">
+    <div class="bodycontainer scrollable" spinner spinner-name="userRepos.spinnerName">
       <table class="table table-hover table-striped table-condensed table-scrollable">
         <tbody>
           <tr ng-repeat="repo in userRepos.user.repos | orderBy : '-stargazers_count'">
-            <th scope="row">{{$index+1}}</th>
-            <td><a ng-href="{{repo.url}}" target="_blank">{{repo.name}}</a></td>
-            <td>{{repo.stargazers_count}}</td>
+            <th scope="row" class="col-md-2">{{$index+1}}</th>
+            <td class="col-md-8"><a ng-href="{{repo.url}}" target="_blank">{{repo.name}}</a></td>
+            <td class="col-md-2">{{repo.stargazers_count}}</td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>{{userRepos.message}}</h4>
+      </div>
     </div>
   </div>
 </div>

@@ -11,23 +11,28 @@ module.run(["$templateCache", function($templateCache) {
     "      <table class=\"table table-striped\">\n" +
     "        <thead>\n" +
     "          <tr>\n" +
-    "            <th>#</th>\n" +
-    "            <th>Repo</th>\n" +
-    "            <th>Stars</th>\n" +
+    "            <th class=\"col-md-2\"></th>\n" +
+    "            <th class=\"col-md-8\">Repo</th>\n" +
+    "            <th class=\"col-md-2\">Stars</th>\n" +
     "          </tr>\n" +
     "        </thead>\n" +
     "      </table>\n" +
     "    </div>\n" +
-    "    <div class=\"bodycontainer scrollable\">\n" +
+    "    <div class=\"bodycontainer scrollable\" spinner spinner-name=\"userRepos.spinnerName\">\n" +
     "      <table class=\"table table-hover table-striped table-condensed table-scrollable\">\n" +
     "        <tbody>\n" +
     "          <tr ng-repeat=\"repo in userRepos.user.repos | orderBy : '-stargazers_count'\">\n" +
-    "            <th scope=\"row\">{{$index+1}}</th>\n" +
-    "            <td><a ng-href=\"{{repo.url}}\" target=\"_blank\">{{repo.name}}</a></td>\n" +
-    "            <td>{{repo.stargazers_count}}</td>\n" +
+    "            <th scope=\"row\" class=\"col-md-2\">{{$index+1}}</th>\n" +
+    "            <td class=\"col-md-8\"><a ng-href=\"{{repo.url}}\" target=\"_blank\">{{repo.name}}</a></td>\n" +
+    "            <td class=\"col-md-2\">{{repo.stargazers_count}}</td>\n" +
     "          </tr>\n" +
     "        </tbody>\n" +
     "      </table>\n" +
+    "    </div>\n" +
+    "    <div class=\"row\">\n" +
+    "      <div class=\"col-md-12\">\n" +
+    "        <h4>{{userRepos.message}}</h4>\n" +
+    "      </div>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "</div>");

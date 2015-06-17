@@ -7,7 +7,8 @@ angular.module('code-star', [
   'code-star.config',
   'code-star.github-account-compare',
   'code-star.directives.user-repos',
-  'code-star.models.user-repos'
+  'code-star.models.user-repos',
+  'angular-spinner'
 ])
 .config(function ($locationProvider, $httpProvider, $stateProvider) {
   $stateProvider
@@ -32,26 +33,6 @@ angular.module("code-star.config", [])
 .constant("ENV", {})
 
 ;
-angular.module('code-star.directives.user-repos', [
-
-])
-.directive("userRepos", function() {
-  return {
-    controller: 'UserReposController',
-    templateUrl: 'directives/user-repos.tpl.html',
-    controllerAs: 'userRepos',
-    scope: {
-      user: "="
-    },
-    bindToController: true
-  }
-})
-.controller('UserReposController', function($timeout, $scope) {
-  this.onUsernameChange = function(newVal, oldVal){
-    this.user.fetchGithubData();
-  }
-
-})    
 angular.module('code-star.github-account-compare', [
 
 ])
@@ -74,6 +55,37 @@ angular.module('code-star.github-account-compare', [
     new UserRepos()
   ];
 })
+angular.module('code-star.directives.user-repos', [
+
+])
+.directive("userRepos", function() {
+  return {
+    controller: 'UserReposController',
+    templateUrl: 'directives/user-repos.tpl.html',
+    controllerAs: 'userRepos',
+    scope: {
+      user: "="
+    },
+    bindToController: true
+  }
+})
+.controller('UserReposController', function($timeout, $scope, spinner) {
+  this.spinnerName = "userRepoSpinner"+$scope.$id;
+  this.message ="Please type a user above.";
+  this.onUsernameChange = function(newVal, oldVal){
+    var _this = this;
+    spinner.start(this.spinnerName);
+    this.message ="";
+    this.user.fetchGithubData().then(function(){
+      spinner.stop(_this.spinnerName);
+    }, function(err){
+      if(err.status = 404){
+        _this.message = "Could not find github user "+_this.user.username;
+      }
+      spinner.stop(_this.spinnerName);
+    })
+  }
+})    
 angular.module('code-star.models.user-repos', [
 
 ])
