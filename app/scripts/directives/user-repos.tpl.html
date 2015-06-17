@@ -1,5 +1,21 @@
 <div class="row">
   <div class="col-md-12">
-    <input class="form-control input-lg" placeholder="Github username" ng-model="userRepos.userRepos.username" ng-change="userRepos.onUsernameChange(userRepos.userRepos.username)">
+    <input class="form-control input-lg" placeholder="Github username" ng-model="userRepos.user.username" ng-change="userRepos.onUsernameChange()">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Repo</th>
+          <th>Stars</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="repo in userRepos.user.repos">
+          <th scope="row">{{$index+1}}</th>
+          <td><a ng-href="{{repo.url}}" target="_blank">{{repo.name}}</a></td>
+          <td>{{repo.stargazers_count}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

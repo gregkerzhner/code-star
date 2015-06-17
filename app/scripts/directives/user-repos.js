@@ -14,7 +14,7 @@ angular.module('code-star.directives.user-repos', [
 })
 .controller('UserReposController', function($timeout, $scope) {
   this.onUsernameChange = function(newVal, oldVal){
-    console.log(newVal);
+    this.user.fetchGithubData();
   }
 
 })    
