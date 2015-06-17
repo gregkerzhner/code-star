@@ -2,7 +2,7 @@ angular.module('code-star.models.user-repos', [
 
 ])
 
-.factory('UserRepos', function(Restangular, $q){
+.factory('UserRepos', function(Restangular, $q, $timeout){
   var UserRepos = function(){
     this.username = "";
     this.repos = [];
@@ -10,20 +10,36 @@ angular.module('code-star.models.user-repos', [
 
 
   UserRepos.prototype.fetchGithubData = function(){
-    var url = 'users/'+this.username + '/repos';
     var _this = this;
     var deferred = $q.defer();
 
-    Restangular.all(url).getList()
-    .then(function(repos) {
-      console.log(repos);
-      _this.repos = repos;
-      deferred.resolve({});
-    }, function(err){
-      deferred.reject(err);
-    })
-
+    if(this.username && this.username != ""){
+      var url = 'users/'+this.username + '/repos';
+      Restangular.all(url).getList()
+      .then(function(repos) {
+        console.log(repos);
+        _this.repos = repos;
+        deferred.resolve(_this.repos);
+      }, function(err){
+        deferred.reject(err);
+      })
+    }
+    else {
+      _this.repos = [];
+      $timeout(function(){
+        deferred.resolve(_this.repos);
+      })
+    }
     return deferred.promise;
+  }
+
+  UserRepos.prototype.stats = function(){
+    var stats = {};
+    if(this.repos && this.repos.length > 0){
+      stats.mean = _.reduce(this.repos, function(sum, repo) {
+        sum + repo.stargazers_count
+      }, 0) / this.repos.length
+    }
   }
 
   return UserRepos;

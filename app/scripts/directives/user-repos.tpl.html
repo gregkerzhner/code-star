@@ -12,16 +12,23 @@
         </thead>
       </table>
     </div>
-    <div class="bodycontainer scrollable" spinner spinner-name="userRepos.spinnerName">
-      <table class="table table-hover table-striped table-condensed table-scrollable">
-        <tbody>
-          <tr ng-repeat="repo in userRepos.user.repos | orderBy : '-stargazers_count'">
-            <th scope="row" class="col-md-2">{{$index+1}}</th>
-            <td class="col-md-8"><a ng-href="{{repo.url}}" target="_blank">{{repo.name}}</a></td>
-            <td class="col-md-2">{{repo.stargazers_count}}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div spinner spinner-name="userRepos.spinnerName" background-class="opaque">
+      <div class="bodycontainer scrollable">
+        <table class="table table-hover table-striped table-condensed table-scrollable">
+          <tbody>
+            <tr ng-repeat="repo in userRepos.user.repos | orderBy : '-stargazers_count'">
+              <th scope="row" class="col-md-2">{{$index+1}}</th>
+              <td class="col-md-8"><a ng-href="{{repo.url}}" target="_blank">{{repo.name}}</a></td>
+              <td class="col-md-2">{{repo.stargazers_count}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          
+        </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-12">

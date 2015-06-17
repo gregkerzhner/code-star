@@ -9,4 +9,7 @@
   padding: 0; }
 
 .spinner {
-  margin-top: 100px; }
+  margin-top: 80px; }
+
+.opaque {
+  opacity: 0.5; }

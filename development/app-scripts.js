@@ -33,6 +33,96 @@ angular.module("code-star.config", [])
 .constant("ENV", {})
 
 ;
+angular.module('code-star.directives.user-repos', [
+
+])
+.directive("userRepos", function() {
+  return {
+    controller: 'UserReposController',
+    templateUrl: 'directives/user-repos.tpl.html',
+    controllerAs: 'userRepos',
+    scope: {
+      user: "="
+    },
+    bindToController: true
+  }
+})
+.controller('UserReposController', function($timeout, $scope, spinner) {
+  this.spinnerName = "userRepoSpinner"+$scope.$id;
+  this.onUsernameChange = function(){
+    var _this = this;
+    spinner.start(this.spinnerName);
+    this.message ="";
+    this.user.fetchGithubData().then(function(results){
+        spinner.stop(_this.spinnerName);
+        if(_this.user.username == ""){
+          _this.setDefaultMessage();
+        }
+        else if(results.length == 0){
+          _this.message = "User has no repos"
+        }
+        
+      }, function(err){
+        if(err.status = 404){
+          _this.message = "Could not find github user "+_this.user.username;
+        }
+        spinner.stop(_this.spinnerName);
+      }
+    );
+  }
+
+  this.setDefaultMessage = function(){
+    this.message ="Please type a user above";
+  }
+
+  this.setDefaultMessage();
+})    
+angular.module('code-star.models.user-repos', [
+
+])
+
+.factory('UserRepos', function(Restangular, $q, $timeout){
+  var UserRepos = function(){
+    this.username = "";
+    this.repos = [];
+  }
+
+
+  UserRepos.prototype.fetchGithubData = function(){
+    var _this = this;
+    var deferred = $q.defer();
+
+    if(this.username && this.username != ""){
+      var url = 'users/'+this.username + '/repos';
+      Restangular.all(url).getList()
+      .then(function(repos) {
+        console.log(repos);
+        _this.repos = repos;
+        deferred.resolve(_this.repos);
+      }, function(err){
+        deferred.reject(err);
+      })
+    }
+    else {
+      _this.repos = [];
+      $timeout(function(){
+        deferred.resolve(_this.repos);
+      })
+    }
+    return deferred.promise;
+  }
+
+  UserRepos.prototype.stats = function(){
+    var stats = {};
+    if(this.repos && this.repos.length > 0){
+      stats.mean = _.reduce(this.repos, function(sum, repo) {
+        sum + repo.stargazers_count
+      }, 0) / this.repos.length
+    }
+  }
+
+  return UserRepos;
+});
 angular.module('code-star.github-account-compare', [
 
 ])
@@ -55,64 +145,3 @@ angular.module('code-star.github-account-compare', [
     new UserRepos()
   ];
 })
-angular.module('code-star.directives.user-repos', [
-
-])
-.directive("userRepos", function() {
-  return {
-    controller: 'UserReposController',
-    templateUrl: 'directives/user-repos.tpl.html',
-    controllerAs: 'userRepos',
-    scope: {
-      user: "="
-    },
-    bindToController: true
-  }
-})
-.controller('UserReposController', function($timeout, $scope, spinner) {
-  this.spinnerName = "userRepoSpinner"+$scope.$id;
-  this.message ="Please type a user above.";
-  this.onUsernameChange = function(newVal, oldVal){
-    var _this = this;
-    spinner.start(this.spinnerName);
-    this.message ="";
-    this.user.fetchGithubData().then(function(){
-      spinner.stop(_this.spinnerName);
-    }, function(err){
-      if(err.status = 404){
-        _this.message = "Could not find github user "+_this.user.username;
-      }
-      spinner.stop(_this.spinnerName);
-    })
-  }
-})    
-angular.module('code-star.models.user-repos', [
-
-])
-
-.factory('UserRepos', function(Restangular, $q){
-  var UserRepos = function(){
-    this.username = "";
-    this.repos = [];
-  }
-
-
-  UserRepos.prototype.fetchGithubData = function(){
-    var url = 'users/'+this.username + '/repos';
-    var _this = this;
-    var deferred = $q.defer();
-
-    Restangular.all(url).getList()
-    .then(function(repos) {
-      console.log(repos);
-      _this.repos = repos;
-      deferred.resolve({});
-    }, function(err){
-      deferred.reject(err);
-    })
-
-    return deferred.promise;
-  }
-
-  return UserRepos;
-});
