@@ -1,0 +1,24 @@
+{
+  "name": "code-star",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "1.3.16",
+    
+    "jquery": "*",
+    
+
+    
+      "bootstrap": "*",
+    
+    "angular-sanitize": "1.3.16",
+    "angular-animate": "1.3.16",
+    
+      "angular-ui-router": "*",
+    
+    
+    "underscore": "*",
+    
+    "angular-mocks": "1.3.16",
+    "angular-cookies": "1.3.16"
+  }
+}
