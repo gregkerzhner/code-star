@@ -9,11 +9,11 @@ angular.module('code-star.models.users-repos-comparator', [
     })
 
     var max = _.max(usersRepos, function(userRepo){
-        return userRepo.stats.sum
+      return userRepo.stats.sum
     });
 
     var winners = _.filter(usersRepos, function(userRepo){
-        return (userRepo.stats.sum == max.stats.sum && userRepo.username != "" && userRepo.repos.length > 0)
+      return (userRepo.stats.sum == max.stats.sum && userRepo.username != "" && userRepo.repos.length > 0)
     });
 
     if(winners.length > 1){
