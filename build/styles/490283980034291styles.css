@@ -1453,9 +1453,7 @@ td.visible-print,th.visible-print{display:table-cell!important}
 .hidden-print{display:none!important}
 }
 @media (min-width:600px){.bodycontainer{max-height:350px;width:100%;margin:0;overflow-y:auto}
-.spinner{margin-top:80px}
 }
-.spinner{margin-top:30px}
 .table-scrollable{margin:0;padding:0}
 .opaque{opacity:.5}
 .margin-top-10{margin-top:10px}
