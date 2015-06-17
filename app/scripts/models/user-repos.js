@@ -14,7 +14,7 @@ angular.module('code-star.models.user-repos', [
     var _this = this;
     var deferred = $q.defer();
 
-    Restangular.all(url).getList()  // GET: /users
+    Restangular.all(url).getList()
     .then(function(repos) {
       console.log(repos);
       _this.repos = repos;

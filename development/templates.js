@@ -6,23 +6,29 @@ module.run(["$templateCache", function($templateCache) {
   $templateCache.put("directives/user-repos.tpl.html",
     "<div class=\"row\">\n" +
     "  <div class=\"col-md-12\">\n" +
-    "    <input class=\"form-control input-lg\" placeholder=\"Github username\" ng-model=\"userRepos.user.username\" ng-change=\"userRepos.onUsernameChange()\">\n" +
-    "    <table class=\"table table-striped\">\n" +
-    "      <thead>\n" +
-    "        <tr>\n" +
-    "          <th>#</th>\n" +
-    "          <th>Repo</th>\n" +
-    "          <th>Stars</th>\n" +
-    "        </tr>\n" +
-    "      </thead>\n" +
-    "      <tbody>\n" +
-    "        <tr ng-repeat=\"repo in userRepos.user.repos\">\n" +
-    "          <th scope=\"row\">{{$index+1}}</th>\n" +
-    "          <td><a ng-href=\"{{repo.url}}\" target=\"_blank\">{{repo.name}}</a></td>\n" +
-    "          <td>{{repo.stargazers_count}}</td>\n" +
-    "        </tr>\n" +
-    "      </tbody>\n" +
-    "    </table>\n" +
+    "    <input class=\"form-control input-lg\" placeholder=\"Github username\" ng-model=\"userRepos.user.username\" ng-change=\"userRepos.onUsernameChange()\" ng-model-options='{ debounce: 500 }'>\n" +
+    "    <div class=\"table-responsive\">\n" +
+    "      <table class=\"table table-striped\">\n" +
+    "        <thead>\n" +
+    "          <tr>\n" +
+    "            <th>#</th>\n" +
+    "            <th>Repo</th>\n" +
+    "            <th>Stars</th>\n" +
+    "          </tr>\n" +
+    "        </thead>\n" +
+    "      </table>\n" +
+    "    </div>\n" +
+    "    <div class=\"bodycontainer scrollable\">\n" +
+    "      <table class=\"table table-hover table-striped table-condensed table-scrollable\">\n" +
+    "        <tbody>\n" +
+    "          <tr ng-repeat=\"repo in userRepos.user.repos | orderBy : '-stargazers_count'\">\n" +
+    "            <th scope=\"row\">{{$index+1}}</th>\n" +
+    "            <td><a ng-href=\"{{repo.url}}\" target=\"_blank\">{{repo.name}}</a></td>\n" +
+    "            <td>{{repo.stargazers_count}}</td>\n" +
+    "          </tr>\n" +
+    "        </tbody>\n" +
+    "      </table>\n" +
+    "    </div>\n" +
     "  </div>\n" +
     "</div>");
 }]);
