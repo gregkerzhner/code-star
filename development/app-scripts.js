@@ -8,7 +8,8 @@ angular.module('code-star', [
   'code-star.github-account-compare',
   'code-star.directives.user-repos',
   'code-star.models.user-repos',
-  'angular-spinner'
+  'angular-spinner',
+  'code-star.models.users-repos-comparator'
 ])
 .config(function ($locationProvider, $httpProvider, $stateProvider) {
   $stateProvider
@@ -42,7 +43,8 @@ angular.module('code-star.directives.user-repos', [
     templateUrl: 'directives/user-repos.tpl.html',
     controllerAs: 'userRepos',
     scope: {
-      user: "="
+      user: "=",
+      onReposChange: '&'
     },
     bindToController: true
   }
@@ -52,20 +54,21 @@ angular.module('code-star.directives.user-repos', [
   this.onUsernameChange = function(){
     var _this = this;
     spinner.start(this.spinnerName);
-    this.message ="";
+    this.message = "";
     this.user.fetchGithubData().then(function(results){
-        spinner.stop(_this.spinnerName);
         if(_this.user.username == ""){
           _this.setDefaultMessage();
         }
         else if(results.length == 0){
           _this.message = "User has no repos"
         }
-        
+        _this.onReposChange();    
+        spinner.stop(_this.spinnerName);    
       }, function(err){
         if(err.status = 404){
           _this.message = "Could not find github user "+_this.user.username;
         }
+        _this.onReposChange(); 
         spinner.stop(_this.spinnerName);
       }
     );
@@ -93,11 +96,15 @@ angular.module('code-star.github-account-compare', [
       }
     });
 })
-.controller("GithubAccountCompareController", function(UserRepos){
+.controller("GithubAccountCompareController", function(UserRepos, usersReposComparator){
   this.usersForCompare = [
     new UserRepos(), 
     new UserRepos()
   ];
+
+  this.onReposChange = function(){
+    usersReposComparator.compare(this.usersForCompare);
+  }
 })
 angular.module('code-star.models.user-repos', [
 
@@ -106,10 +113,14 @@ angular.module('code-star.models.user-repos', [
 .factory('UserRepos', function(Restangular, $q, $timeout){
   var UserRepos = function(){
     this.username = "";
-    this.repos = [];
-    this.stats = {};
+    this.reset();
   }
 
+  UserRepos.prototype.reset = function(){
+    this.repos = [];
+    this.stats = {sum: 0, mean: 0};
+    this.status = "undetermined";
+  }
 
   UserRepos.prototype.fetchGithubData = function(){
     var _this = this;
@@ -123,13 +134,12 @@ angular.module('code-star.models.user-repos', [
         _this.calculateStats();
         deferred.resolve(_this.repos);
       }, function(err){
-        _this.repos = [];
-        _this.calculateStats();
+        _this.reset();
         deferred.reject(err);
       })
     }
     else {
-      _this.repos = [];
+      this.reset();
       $timeout(function(){
         deferred.resolve(_this.repos);
       })
@@ -149,4 +159,33 @@ angular.module('code-star.models.user-repos', [
   }
 
   return UserRepos;
+});
+angular.module('code-star.models.users-repos-comparator', [
+
+])
+
+.service('usersReposComparator', function(){
+  this.compare = function(usersRepos){
+    debugger
+    _.each(usersRepos, function(userRepos){
+      userRepos.status = "undetermined";
+    })
+
+    var max = _.max(usersRepos, function(userRepo){
+        return userRepo.stats.sum
+    });
+
+    var winners = _.filter(usersRepos, function(userRepo){
+        return (userRepo.stats.sum == max.stats.sum && userRepo.username != "")
+    });
+
+    if(winners.length > 1){
+      _.each(winners, function(winner){
+        winner.status = "draw";
+      })
+    }
+    else if(winners.length == 1){
+      winners[0].status = "winner";
+    }
+  }
 });

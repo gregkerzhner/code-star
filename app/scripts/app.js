@@ -8,7 +8,8 @@ angular.module('code-star', [
   'code-star.github-account-compare',
   'code-star.directives.user-repos',
   'code-star.models.user-repos',
-  'angular-spinner'
+  'angular-spinner',
+  'code-star.models.users-repos-comparator'
 ])
 .config(function ($locationProvider, $httpProvider, $stateProvider) {
   $stateProvider

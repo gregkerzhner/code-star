@@ -14,9 +14,13 @@ angular.module('code-star.github-account-compare', [
       }
     });
 })
-.controller("GithubAccountCompareController", function(UserRepos){
+.controller("GithubAccountCompareController", function(UserRepos, usersReposComparator){
   this.usersForCompare = [
     new UserRepos(), 
     new UserRepos()
   ];
+
+  this.onReposChange = function(){
+    usersReposComparator.compare(this.usersForCompare);
+  }
 })

@@ -7,21 +7,6 @@ module.run(["$templateCache", function($templateCache) {
     "<div class=\"row\">\n" +
     "  <div class=\"col-md-12\">\n" +
     "    <input class=\"form-control input-lg\" placeholder=\"Github username\" ng-model=\"userRepos.user.username\" ng-change=\"userRepos.onUsernameChange()\" ng-model-options='{ debounce: 500 }'>\n" +
-    "    <div class=\"row padding-top-10\">\n" +
-    "      <div class=\"col-md-12\">\n" +
-    "        <div class=\"row\">\n" +
-    "          <div class=\"col-md-12\">\n" +
-    "            <span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span> Average stars: {{userRepos.user.stats.mean | number: 1}}\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <div class=\"row\">\n" +
-    "          <div class=\"col-md-12\">\n" +
-    "            <span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span> Total stars: {{userRepos.user.stats.sum}}\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
     "    <div class=\"table-responsive\">\n" +
     "      <table class=\"table table-striped\">\n" +
     "        <thead>\n" +
@@ -45,6 +30,26 @@ module.run(["$templateCache", function($templateCache) {
     "          </tbody>\n" +
     "        </table>\n" +
     "      </div>\n" +
+    "      <div class=\"row padding-top-10\" ng-show=\"userRepos.user.repos.length > 0\">\n" +
+    "        <div class=\"col-md-12\">\n" +
+    "          <div class=\"row\">\n" +
+    "            <div class=\"col-md-12\">\n" +
+    "              <span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span> Average stars: {{userRepos.user.stats.mean | number: 1}}\n" +
+    "            </div>\n" +
+    "          </div>\n" +
+    "\n" +
+    "          <div class=\"row\">\n" +
+    "            <div class=\"col-md-12\">\n" +
+    "              <span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span> Total stars: {{userRepos.user.stats.sum}}\n" +
+    "            </div>\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"row padding-top-10\" ng-show=\"userRepos.user.status != 'undetermined'\">\n" +
+    "      <div class=\"col-md-12\">\n" +
+    "        <div class=\"alert\" role=\"alert\" ng-class=\"{'alert-success': userRepos.user.status == 'winner', 'alert-info': userRepos.user.status == 'draw'}\">{{userRepos.user.status == 'winner' ? 'Winner' : 'Its a draw!'}}</div>\n" +
+    "      </div>\n" +
     "    </div>\n" +
     "    <div class=\"row\">\n" +
     "      <div class=\"col-md-12\">\n" +
@@ -67,7 +72,7 @@ module.run(["$templateCache", function($templateCache) {
     "    <h3 class=\"text-center\">Code Star</h3>\n" +
     "    <div class=\"row\">\n" +
     "      <div ng-repeat=\"userRepos in githubAccountCompare.usersForCompare\" class=\"col-md-6\">\n" +
-    "        <user-repos user=\"userRepos\"></user-repos>\n" +
+    "        <user-repos user=\"userRepos\" on-repos-change=\"githubAccountCompare.onReposChange()\"></user-repos>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "  </div>\n" +

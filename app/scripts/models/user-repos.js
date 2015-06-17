@@ -5,10 +5,14 @@ angular.module('code-star.models.user-repos', [
 .factory('UserRepos', function(Restangular, $q, $timeout){
   var UserRepos = function(){
     this.username = "";
-    this.repos = [];
-    this.stats = {};
+    this.reset();
   }
 
+  UserRepos.prototype.reset = function(){
+    this.repos = [];
+    this.stats = {sum: 0, mean: 0};
+    this.status = "undetermined";
+  }
 
   UserRepos.prototype.fetchGithubData = function(){
     var _this = this;
@@ -22,13 +26,12 @@ angular.module('code-star.models.user-repos', [
         _this.calculateStats();
         deferred.resolve(_this.repos);
       }, function(err){
-        _this.repos = [];
-        _this.calculateStats();
+        _this.reset();
         deferred.reject(err);
       })
     }
     else {
-      _this.repos = [];
+      this.reset();
       $timeout(function(){
         deferred.resolve(_this.repos);
       })

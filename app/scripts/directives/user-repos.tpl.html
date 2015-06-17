@@ -1,21 +1,6 @@
 <div class="row">
   <div class="col-md-12">
     <input class="form-control input-lg" placeholder="Github username" ng-model="userRepos.user.username" ng-change="userRepos.onUsernameChange()" ng-model-options='{ debounce: 500 }'>
-    <div class="row padding-top-10">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-12">
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Average stars: {{userRepos.user.stats.mean | number: 1}}
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12">
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Total stars: {{userRepos.user.stats.sum}}
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -38,6 +23,26 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="row padding-top-10" ng-show="userRepos.user.repos.length > 0">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Average stars: {{userRepos.user.stats.mean | number: 1}}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Total stars: {{userRepos.user.stats.sum}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row padding-top-10" ng-show="userRepos.user.status != 'undetermined'">
+      <div class="col-md-12">
+        <div class="alert" role="alert" ng-class="{'alert-success': userRepos.user.status == 'winner', 'alert-info': userRepos.user.status == 'draw'}">{{userRepos.user.status == 'winner' ? 'Winner' : 'Its a draw!'}}</div>
       </div>
     </div>
     <div class="row">
