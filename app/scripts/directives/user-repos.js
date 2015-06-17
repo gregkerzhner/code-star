@@ -30,8 +30,8 @@ angular.module('code-star.directives.user-repos', [
         _this.onReposChange();    
         spinner.stop(_this.spinnerName);    
       }, function(err){
-        if(err.status = 404){
-          _this.message = "Could not find github user "+_this.user.username;
+        if(err && err.data && err.data.message){
+          _this.message = err.data.message;
         }
         _this.onReposChange(); 
         spinner.stop(_this.spinnerName);

@@ -55,6 +55,21 @@ var config = function(src) {
     .pipe(gulp.dest('app/scripts'));
 }
 
+gulp.task('production-deploy', function() {
+
+  // create a new publisher
+  var publisher = awspublish.create({ accessKeyId: 'AKIAIAHEUDYDPJPDHICA',  secretAccessKey: process.env.key, params: {Bucket: 'code-star'}});
+
+  // define custom headers
+  var headers = {
+     'Cache-Control': 'max-age=315360000, no-transform, public'
+  };
+
+  gulp.src(['build/**/*.*'])
+    .pipe(publisher.publish())
+    .pipe(awspublish.reporter());
+});
+
 gulp.task('config-development', function () {
   return config('app/scripts/config/config-development.json')
 });
@@ -164,7 +179,7 @@ gulp.task('staging', function() {
 });
 
 gulp.task('production', function() {
-  runSequence('clean', 'config-production','appScripts', 'vendorScripts', 'vendorStyles', 'appStyles','templates','build-js', 'build-styles', 'production-index','build-other-files', function() {  
+  runSequence('clean', 'config-production','appScripts', 'vendorScripts', 'vendorStyles', 'appStyles','templates','build-js', 'build-styles', 'production-index','build-other-files', 'production-deploy', function() {  
   });
 });
 
