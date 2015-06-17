@@ -28,7 +28,7 @@ angular.module('code-star.models.user-repos', [
       }, function(err){
         _this.reset();
         deferred.reject(err);
-      })
+      });
     }
     else {
       this.reset();

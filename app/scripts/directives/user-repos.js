@@ -25,7 +25,7 @@ angular.module('code-star.directives.user-repos', [
           _this.setDefaultMessage();
         }
         else if(results.length == 0){
-          _this.message = "User has no repos"
+          _this.message = "User has no repos";
         }
         _this.onReposChange();    
         spinner.stop(_this.spinnerName);    
