@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12">
     <input class="form-control input-lg" placeholder="Github username" ng-model="userRepos.user.username" ng-change="userRepos.onUsernameChange()" ng-model-options='{ debounce: 500 }'>
-    <div class="table-responsive">
+    <div class="table-responsive margin-top-10">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -50,7 +50,7 @@
         <div class="alert alert-success" role="alert">This user wins!</div>
       </div>
     </div>
-    <div class="row">
+    <div class="row padding-top-10">
       <div class="col-md-12">
         <h5 class="text-center">{{userRepos.message}}</h5>
       </div>

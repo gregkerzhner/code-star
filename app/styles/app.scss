@@ -1,15 +1,26 @@
-.bodycontainer { 
-  max-height: 350px; width: 100%; margin: 0; overflow-y: auto; 
+@media (min-width: 600px) {
+  .bodycontainer { 
+    max-height: 350px; width: 100%; margin: 0; overflow-y: auto; 
+  }
+  .spinner {
+    margin-top: 80px;
+  }
 }
+
+.spinner {
+  margin-top: 30px;
+}
+
 .table-scrollable { 
   margin: 0; padding: 0; 
-}
-.spinner {
-  margin-top: 80px;
 }
 
 .opaque {
   opacity: 0.5;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
 }
 
 .padding-top-10 {
